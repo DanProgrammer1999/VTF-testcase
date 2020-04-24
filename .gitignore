@@ -2,3 +2,8 @@ pyvenv.cfg
 Scripts/*
 Lib/*
 .idea/*
+db.sqlite3
+__pycache__/*
+booking/migrations/*
+booking/__pycache__/*
+VTFSolutionsTestCase/__pycache__/*
