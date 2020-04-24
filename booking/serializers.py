@@ -8,25 +8,25 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['first_name', 'last_name', 'username', 'email', 'password']
 
 
-class Hotel(serializers.HyperlinkedModelSerializer):
+class HotelSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Hotel
         fields = ['name', 'admin']
 
 
-class RoomCategory(serializers.HyperlinkedModelSerializer):
+class RoomCategorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = RoomCategory
         fields = ['name', 'min_price', 'hotel', 'total_count']
 
 
-class Room(serializers.HyperlinkedModelSerializer):
+class RoomSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Room
         fields = ['name', 'room_category']
 
 
-class Booking(serializers.HyperlinkedModelSerializer):
+class BookingSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Booking
         fields = ['room', 'date_check_in', 'date_check_out']
