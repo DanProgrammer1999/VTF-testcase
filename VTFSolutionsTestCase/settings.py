@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'booking',
+    'VTFSolutionsTestCase.booking.apps.BookingConfig',
     'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
