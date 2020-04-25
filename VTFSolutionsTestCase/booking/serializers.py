@@ -12,6 +12,14 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['url', 'first_name', 'last_name', 'username', 'email', 'password']
 
 
+class ChangePasswordSerializer(serializers.Serializer):
+
+    model = User
+
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+
+
 class HotelSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Hotel
