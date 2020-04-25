@@ -5,7 +5,7 @@ from rest_framework import serializers
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'email', 'password']
+        fields = ['url', 'first_name', 'last_name', 'username', 'email', 'password']
 
 
 class HotelSerializer(serializers.HyperlinkedModelSerializer):
@@ -13,12 +13,7 @@ class HotelSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Hotel
-        fields = ['name', 'admin']
-
-    def create(self, validated_data):
-        hotel = Hotel(name=validated_data['name'], admin=validated_data['admin'])
-        print(hotel)
-        hotel.save()
+        fields = ['name', 'admin', 'room_categories']
 
 
 class RoomCategorySerializer(serializers.HyperlinkedModelSerializer):
@@ -26,7 +21,7 @@ class RoomCategorySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = RoomCategory
-        fields = ['name', 'min_price', 'hotel', 'total_count']
+        fields = ['name', 'min_price', 'hotel', 'total_count', 'rooms']
 
 
 class RoomSerializer(serializers.HyperlinkedModelSerializer):
@@ -40,4 +35,4 @@ class RoomSerializer(serializers.HyperlinkedModelSerializer):
 class BookingSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Booking
-        fields = ['room', 'date_check_in', 'date_check_out']
+        fields = ['url', 'room', 'date_check_in', 'date_check_out']

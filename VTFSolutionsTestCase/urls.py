@@ -16,16 +16,11 @@ Including another URLconf
 
 from django.urls import path, include
 from django.contrib import admin
-from rest_framework import routers
-from VTFSolutionsTestCase.booking.views import *
 
-router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
-router.register(r'hotels', HotelViewSet)
 # router.register(r'')
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('', include('VTFSolutionsTestCase.booking.urls')),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

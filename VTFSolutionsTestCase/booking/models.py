@@ -16,17 +16,21 @@ class Hotel(models.Model):
 
 class RoomCategory(models.Model):
     name = models.CharField(max_length=100)
-    min_price = models.FloatField(name='minimum price')
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+    min_price = models.FloatField()
+    hotel = models.ForeignKey(Hotel, related_name='room_categories', on_delete=models.CASCADE)
     total_count = models.IntegerField(null=True)
+
+    def __str__(self):
+        return "{},\tminimum price {},\ttotal {} rooms in {}"\
+            .format(self.name, self.min_price, self.total_count, self.hotel.name)
 
 
 class Room(models.Model):
     name = models.CharField(max_length=100)
-    room_category = models.ForeignKey(RoomCategory, on_delete=models.CASCADE)
+    room_category = models.ForeignKey(RoomCategory, related_name='rooms', on_delete=models.CASCADE)
 
 
 class Booking(models.Model):
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, related_name='room_bookings', on_delete=models.CASCADE)
     date_check_in = models.DateField(name='check in date')
     date_check_out = models.DateField(name='check out date')
