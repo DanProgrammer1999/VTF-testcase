@@ -3,15 +3,11 @@ from django.urls import include, path
 from .views import *
 
 router = routers.DefaultRouter()
-router.register('users', UserList)
-router.register('user_detail', UserDetail)
-router.register('hotels', HotelList)
-router.register('hotel_detail', HotelDetail)
-router.register('room_categories', RoomCategoryList)
-router.register('room_category_detail', RoomCategoryDetail)
-router.register('rooms', RoomList, basename='room')
-router.register('room_detail', RoomDetail)
-router.register('bookings', BookingList)
+router.register('users', UserView)
+router.register('hotels', HotelView)
+router.register('room_categories', RoomCategoryView)
+router.register('rooms', RoomView, basename='room')
+router.register('bookings', BookingView)
 
 urlpatterns = [
     path('', include(router.urls))

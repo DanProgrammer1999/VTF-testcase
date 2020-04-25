@@ -3,31 +3,19 @@ from .serializers import *
 
 
 # Create your views here.
-class UserList(generics.ListAPIView, viewsets.ViewSet):
+class UserView(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAdminUser]
 
 
-class UserDetail(generics.RetrieveUpdateAPIView, viewsets.ViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = [permissions.IsAdminUser]
-
-
-class HotelList(generics.ListAPIView, viewsets.ViewSet):
+class HotelView(viewsets.ModelViewSet):
     queryset = Hotel.objects.all()
     serializer_class = HotelSerializer
     permission_classes = [permissions.IsAdminUser]
 
 
-class HotelDetail(generics.RetrieveUpdateAPIView, viewsets.ViewSet):
-    queryset = Hotel.objects.all()
-    serializer_class = HotelSerializer
-    permission_classes = [permissions.IsAdminUser]
-
-
-class RoomCategoryList(generics.ListAPIView, viewsets.ViewSet):
+class RoomCategoryView(viewsets.ModelViewSet):
     queryset = RoomCategory.objects.all()
     serializer_class = RoomCategorySerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -37,13 +25,7 @@ class RoomCategoryList(generics.ListAPIView, viewsets.ViewSet):
         return RoomCategory.objects.filter(hotel__admin=user)
 
 
-class RoomCategoryDetail(generics.RetrieveAPIView, viewsets.ViewSet):
-    serializer_class = RoomCategorySerializer
-    permission_classes = [permissions.IsAuthenticated]
-    queryset = RoomCategory.objects.all()
-
-
-class RoomList(generics.ListAPIView, viewsets.ViewSet):
+class RoomView(viewsets.ModelViewSet):
     serializer_class = RoomSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -52,13 +34,7 @@ class RoomList(generics.ListAPIView, viewsets.ViewSet):
         return Room.objects.filter(room_category__hotel__admin=user)
 
 
-class RoomDetail(generics.RetrieveAPIView, viewsets.ViewSet):
-    serializer_class = RoomSerializer
-    permission_classes = [permissions.IsAuthenticated]
-    queryset = Room.objects.all()
-
-
-class BookingList(generics.ListAPIView, viewsets.ModelViewSet):
+class BookingView(viewsets.ModelViewSet):
     serializer_class = BookingSerializer
     permission_classes = [permissions.IsAuthenticated]
     queryset = Booking.objects.all()
