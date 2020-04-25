@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions, viewsets
+from rest_framework import permissions, viewsets
 from .serializers import *
 
 
@@ -16,7 +16,6 @@ class HotelView(viewsets.ModelViewSet):
 
 
 class RoomCategoryView(viewsets.ModelViewSet):
-    queryset = RoomCategory.objects.all()
     serializer_class = RoomCategorySerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -37,7 +36,6 @@ class RoomView(viewsets.ModelViewSet):
 class BookingView(viewsets.ModelViewSet):
     serializer_class = BookingSerializer
     permission_classes = [permissions.IsAuthenticated]
-    queryset = Booking.objects.all()
 
     def get_queryset(self):
         user = self.request.user
