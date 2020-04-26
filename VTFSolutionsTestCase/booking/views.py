@@ -74,7 +74,14 @@ class RoomView(viewsets.ReadOnlyModelViewSet):
             if user.is_superuser \
             else Room.objects.filter(room_category__hotel__admin=user)
 
-        return all_rooms
+        # Filter for room category (if specified)
+        category = self.request.query_params.get('room_category', None)
+        filtered_rooms =        \
+            all_rooms           \
+            if category is None \
+            else all_rooms.filter(room_category=category)
+
+        return filtered_rooms
 
 
 class BookingView(viewsets.ReadOnlyModelViewSet):
@@ -83,7 +90,18 @@ class BookingView(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        if user.is_superuser:
-            return Booking.objects.all()
 
-        return Booking.objects.filter(room__room_category__hotel__admin=user)
+        # Filter to return only bookings for user-related hotels
+        all_bookings =            \
+            Booking.objects.all() \
+            if user.is_superuser  \
+            else Booking.objects.filter(room__room_category__hotel__admin=user)
+
+        # Filter for a room (if specified)
+        room = self.request.query_params.get('room', None)
+        room_bookings =     \
+            all_bookings    \
+            if room is None \
+            else all_bookings.filter(room=room)
+
+        return room_bookings
