@@ -33,8 +33,8 @@ class Room(models.Model):
 
 class Booking(models.Model):
     room = models.ForeignKey(Room, related_name='room_bookings', on_delete=models.CASCADE)
-    date_check_in = models.DateField(name='check in date')
-    date_check_out = models.DateField(name='check out date')
+    date_check_in = models.DateField()
+    date_check_out = models.DateField()
 
     def __str__(self):
         return "{} ({}) from {} to {}".format(self.room.name, self.room.room_category.name, self.date_check_in, self.date_check_out)
