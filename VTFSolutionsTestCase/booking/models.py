@@ -18,11 +18,9 @@ class RoomCategory(models.Model):
     name = models.CharField(max_length=100)
     min_price = models.FloatField()
     hotel = models.ForeignKey(Hotel, related_name='room_categories', on_delete=models.CASCADE)
-    total_count = models.IntegerField(null=True)
 
     def __str__(self):
-        return "{},\tminimum price {},\ttotal {} rooms in {}"\
-            .format(self.name, self.min_price, self.total_count, self.hotel.name)
+        return self.name
 
 
 class Room(models.Model):

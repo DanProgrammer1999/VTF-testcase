@@ -29,7 +29,7 @@ class HotelSerializer(serializers.HyperlinkedModelSerializer):
 class RoomCategorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = RoomCategory
-        fields = ['url', 'name', 'min_price', 'hotel', 'total_count', 'rooms']
+        fields = ['url', 'name', 'min_price', 'hotel', 'rooms']
 
 
 class RoomSerializer(serializers.HyperlinkedModelSerializer):
