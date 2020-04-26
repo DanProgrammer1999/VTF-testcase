@@ -36,7 +36,6 @@ class UserView(viewsets.ReadOnlyModelViewSet):
 
 
 class HotelView(viewsets.ReadOnlyModelViewSet):
-    queryset = Hotel.objects.all()
     serializer_class = HotelSerializer
     permission_classes = [permissions.IsAuthenticated]
     renderer_classes = [renderers.AdminRenderer]

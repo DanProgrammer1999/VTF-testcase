@@ -4,7 +4,7 @@ from .views import *
 
 router = routers.DefaultRouter()
 router.register('users', UserView)
-router.register('hotels', HotelView)
+router.register('hotels', HotelView, basename='hotel')
 router.register('room_categories', RoomCategoryView, basename='roomcategory')
 router.register('rooms', RoomView, basename='room')
 router.register('bookings', BookingView, basename='booking')
