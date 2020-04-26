@@ -58,6 +58,9 @@ class RoomCategoryView(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
+        if user.is_superuser:
+            return RoomCategory.objects.all()
+
         return RoomCategory.objects.filter(hotel__admin=user)
 
 
@@ -67,6 +70,9 @@ class RoomView(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
+        if user.is_superuser:
+            return Room.objects.all()
+
         return Room.objects.filter(room_category__hotel__admin=user)
 
 
@@ -76,4 +82,7 @@ class BookingView(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
+        if user.is_superuser:
+            return Booking.objects.all()
+
         return Booking.objects.filter(room__room_category__hotel__admin=user)
