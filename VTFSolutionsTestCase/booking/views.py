@@ -52,6 +52,7 @@ class HotelView(viewsets.ReadOnlyModelViewSet):
 class RoomCategoryView(viewsets.ReadOnlyModelViewSet):
     serializer_class = RoomCategorySerializer
     permission_classes = [permissions.IsAuthenticated]
+    renderer_classes = [renderers.AdminRenderer]
 
     def get_queryset(self):
         user = self.request.user
@@ -64,6 +65,7 @@ class RoomCategoryView(viewsets.ReadOnlyModelViewSet):
 class RoomView(viewsets.ReadOnlyModelViewSet):
     serializer_class = RoomSerializer
     permission_classes = [permissions.IsAuthenticated]
+    renderer_classes = [renderers.AdminRenderer]
 
     def get_queryset(self):
         user = self.request.user
@@ -87,6 +89,7 @@ class RoomView(viewsets.ReadOnlyModelViewSet):
 class BookingView(viewsets.ReadOnlyModelViewSet):
     serializer_class = BookingSerializer
     permission_classes = [permissions.IsAuthenticated]
+    renderer_classes = [renderers.AdminRenderer]
 
     def get_queryset(self):
         user = self.request.user
