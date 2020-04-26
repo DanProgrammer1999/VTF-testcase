@@ -6,14 +6,14 @@ from .serializers import *
 
 
 # Create your views here.
-class UserView(viewsets.ModelViewSet):
+class UserView(viewsets.ReadOnlyModelViewSet):
     renderer_classes = [renderers.AdminRenderer]
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAdminUser]
 
     @action(detail=False,
-            methods=['put', 'get'],
+            methods=['put'],
             name='Change Password',
             permission_classes=[permissions.IsAuthenticated])
     def change_password(self, request):
@@ -35,24 +35,21 @@ class UserView(viewsets.ModelViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class HotelView(viewsets.ModelViewSet):
+class HotelView(viewsets.ReadOnlyModelViewSet):
     queryset = Hotel.objects.all()
     serializer_class = HotelSerializer
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAuthenticated]
     renderer_classes = [renderers.AdminRenderer]
 
-    def create(self, request, pk=None, *args, **kwargs):
-        data = request.data.copy()
-        data['pk'] = pk
-        serializer = HotelSerializer(data=data, context={'request': request})
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return Hotel.objects.all()
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Hotel.objects.filter(admin=user)
 
 
-class RoomCategoryView(viewsets.ModelViewSet):
+class RoomCategoryView(viewsets.ReadOnlyModelViewSet):
     serializer_class = RoomCategorySerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -64,19 +61,23 @@ class RoomCategoryView(viewsets.ModelViewSet):
         return RoomCategory.objects.filter(hotel__admin=user)
 
 
-class RoomView(viewsets.ModelViewSet):
+class RoomView(viewsets.ReadOnlyModelViewSet):
     serializer_class = RoomSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         user = self.request.user
-        if user.is_superuser:
-            return Room.objects.all()
 
-        return Room.objects.filter(room_category__hotel__admin=user)
+        # Filter to allow only user-related rooms (or all for admin)
+        all_rooms =              \
+            Room.objects.all()   \
+            if user.is_superuser \
+            else Room.objects.filter(room_category__hotel__admin=user)
+
+        return all_rooms
 
 
-class BookingView(viewsets.ModelViewSet):
+class BookingView(viewsets.ReadOnlyModelViewSet):
     serializer_class = BookingSerializer
     permission_classes = [permissions.IsAuthenticated]
 
