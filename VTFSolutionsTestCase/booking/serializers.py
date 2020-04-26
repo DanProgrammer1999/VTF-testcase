@@ -9,7 +9,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ['url', 'first_name', 'last_name', 'username', 'email', 'password']
+        fields = ['url', 'first_name', 'last_name', 'username', 'email']
 
 
 class ChangePasswordSerializer(serializers.Serializer):
